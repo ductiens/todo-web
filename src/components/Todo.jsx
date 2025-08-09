@@ -3,6 +3,8 @@ import axios from "axios";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import TodoItems from "./TodoItems";
 
+const API = import.meta.env.VITE_API_URL;
+
 const Todo = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -10,7 +12,7 @@ const Todo = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/tasks");
+      const response = await axios.get(`${API}/tasks`);
       setTasks(response.data);
     } catch (error) {
       console.error("Error fetching tasks:", error);
@@ -25,7 +27,7 @@ const Todo = () => {
     if (!title.trim()) return;
 
     try {
-      await axios.post("http://localhost:8080/tasks", {
+      await axios.post(`${API}/tasks`, {
         title,
         description,
       });
@@ -77,7 +79,7 @@ const Todo = () => {
             title={task.title}
             description={task.description}
             completed={task.completed}
-            onTaskUpdated={fetchTasks} 
+            onTaskUpdated={fetchTasks}
           />
         ))}
       </div>

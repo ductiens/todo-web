@@ -4,10 +4,12 @@ import { MdRadioButtonUnchecked } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
 
+const API = import.meta.env.VITE_API_URL;
+
 const TodoItems = ({ id, title, description, completed, onTaskUpdated }) => {
   const handleToggleComplete = async () => {
     try {
-      await axios.put(`http://localhost:8080/tasks/${id}`, {
+      await axios.put(`${API}/tasks/${id}`, {
         completed: !completed,
       });
       onTaskUpdated();
@@ -19,7 +21,7 @@ const TodoItems = ({ id, title, description, completed, onTaskUpdated }) => {
   // Hàm xóa task
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8080/tasks/${id}`);
+      await axios.delete(`${API}/tasks/${id}`);
       onTaskUpdated();
     } catch (err) {
       console.error("Error deleting task:", err);
@@ -49,9 +51,7 @@ const TodoItems = ({ id, title, description, completed, onTaskUpdated }) => {
           {title}
         </p>
         <p
-          className={`text-sm break-words line-clamp-3 ${
-            completed ? "line-through text-slate-300" : "text-slate-500"
-          }`}
+          className={`text-sm break-words line-clamp-3 ${completed ? "line-through text-slate-300" : "text-slate-500"}`}
         >
           {description}
         </p>
